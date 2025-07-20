@@ -1,0 +1,17 @@
+password
+1234
+motdepasse
+qwerty
+azerty
+abc123
+123
+Pass
+password1
+admin123
+user123
+pass123
+secret
+login
+password123
+pass
+demo
