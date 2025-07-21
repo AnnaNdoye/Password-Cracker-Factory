@@ -12,19 +12,39 @@ public class CrackerApp {
 
         if (type == null || targetType == null || login == null) {
             System.out.println("Usage: java CrackerApp --type <bruteforce|dictionnary> --target <local|online> --login <username>");
-            // Ajoutez d'autres paramètres si nécessaire, comme l'alphabet ou la longueur max pour le brute force, ou le chemin du dictionnaire.
+            System.out.println("Exemple: java CrackerApp --type bruteforce --target online --login admin");
             return;
         }
 
         AbstractCrackerFactory factory = null;
-        String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"; // Alphabet par défaut
-        int maxLen = 4; // Longueur max par défaut pour Brute Force
-        String dictionaryPath = "dictionary.txt"; // Chemin du dictionnaire par défaut
-        String onlineTargetUrl = "http://localhost/projet/php/auth.php"; // URL de la cible en ligne
+        
+        // OPTIMISATION : Alphabet plus petit et longueur réduite pour les tests rapides
+        String alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
+        int maxLen = 4; // Longueur max réduite pour éviter les temps d'exécution trop longs
+        
+        String dictionaryPath = "dictionary.txt"; 
+        String onlineTargetUrl = "http://localhost/projet/php/auth.php";
 
         // Paramètres de la cible locale (pour les tests)
         String localTargetFixedLogin = "admin";
-        String localTargetFixedPassword = "pass"; // Mettez un mot de passe court pour tester rapidement le brute force local
+        String localTargetFixedPassword = "pass"; // Cohérent avec auth.php
+
+        System.out.println("================================= CONFIGURATION ===========================");
+        System.out.println("Type d'attaque: " + type);
+        System.out.println("Type de cible: " + targetType);
+        System.out.println("Login cible: " + login);
+        
+        if ("bruteforce".equals(type)) {
+            System.out.println("Alphabet: " + alphabet);
+            System.out.println("Longueur max: " + maxLen);
+        } else if ("dictionnary".equals(type)) {
+            System.out.println("Fichier dictionnaire: " + dictionaryPath);
+        }
+        
+        if ("online".equals(targetType)) {
+            System.out.println("URL cible: " + onlineTargetUrl);
+        }
+        System.out.println("=========================================================================\n");
 
         switch (type + "-" + targetType) {
             case "bruteforce-local":
@@ -41,18 +61,30 @@ public class CrackerApp {
                 break;
             default:
                 System.out.println("Combinaison type-cible non reconnue: " + type + "-" + targetType);
+                System.out.println("Combinaisons valides:");
+                System.out.println("  - bruteforce-local");
+                System.out.println("  - bruteforce-online");
+                System.out.println("  - dictionnary-local");
+                System.out.println("  - dictionnary-online");
                 return;
         }
 
         if (factory != null) {
             CrackerTask crackerTask = factory.createCrackerTask();
             System.out.println("Lancement de l'opération de cassage...");
+            
+            long globalStartTime = System.currentTimeMillis();
             boolean cracked = crackerTask.execute(login);
+            long globalEndTime = System.currentTimeMillis();
+            
+            System.out.println("\n========================== RÉSULTAT FINAL ==========================");
             if (cracked) {
-                System.out.println("Opération de cassage réussie !");
+                System.out.println("Opération de cassage RÉUSSIE !");
             } else {
-                System.out.println("Opération de cassage échouée. Mot de passe non trouvé.");
+                System.out.println("Opération de cassage ÉCHOUÉE. Mot de passe non trouvé.");
             }
+            System.out.println("Temps total d'exécution: " + (globalEndTime - globalStartTime) + " ms");
+            System.out.println("=====================================================================");
         }
     }
 
