@@ -39,10 +39,14 @@ public class OnlineTarget implements AuthenticationTarget {
             
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (java.io.InputStream is = conn.getInputStream();
-                        java.util.Scanner s = new java.util.Scanner(is, StandardCharsets.UTF_8).useDelimiter("\\A")) {                    
+                        java.util.Scanner s = new java.util.Scanner(is, StandardCharsets.UTF_8).useDelimiter("\\A")) {
+                    String response = s.hasNext() ? s.next() : "";
+                    // Vérifier si la réponse indique un succès
+                    if (response.contains("\"status\":\"success\"") || response.contains("success")) {
+                        return true; // CORRECTION: Retourner true en cas de succès
+                    }
                 }
             } else {
-                
                 // Lire le message d'erreur si disponible
                 try (java.io.InputStream errorStream = conn.getErrorStream()) {
                     if (errorStream != null) {
@@ -62,7 +66,7 @@ public class OnlineTarget implements AuthenticationTarget {
                 conn.disconnect();
             }
             try {
-                Thread.sleep(200); // Pause entre les requêtes pour éviter de surcharger le serveur
+                Thread.sleep(50); // CORRECTION: Réduire la pause à 50ms au lieu de 200ms
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
