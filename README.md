@@ -93,7 +93,7 @@ Mini-projet-Password-Cracker/
 │── DiagrammeDeClasseUML.png
 ├── README.md
 └── commande_a_exécuter.txt
-
+```
 ## Variantes Implémentées
 
 ### 1. Attaque Brute Force Locale
