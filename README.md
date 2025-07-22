@@ -65,24 +65,34 @@ Ce projet implémente un système modulaire de cassage de mots de passe utilisan
 ## Structure du Projet
 
 ```
-projet/
-├── src/                          # Sources Java
-│   ├── CrackerApp.java          # Point d'entrée principal
+Mini-projet-Password-Cracker/
+│
+├── php/
+│   ├── auth.php
+│   └── bienvenue.php
+│
+├── src/
 │   ├── AbstractCrackerFactory.java
 │   ├── AttackStrategy.java
 │   ├── AuthenticationTarget.java
+│   ├── BruteForceAttack.java
+│   ├── BruteForceLocalCrackerTask.java
+│   ├── BruteForceOnlineCrackerTask.java
+│   ├── CrackerApp.java
 │   ├── CrackerTask.java
-│   ├── BruteForceAttack.java    # Stratégie Brute Force
-│   ├── DictionaryAttack.java    # Stratégie Dictionnaire
-│   ├── LocalTarget.java         # Cible locale
-│   ├── OnlineTarget.java        # Cible en ligne
-│   ├── *CrackerTask.java        # 4 implémentations de tâches
-│   ├── *Factory.java            # 4 fabriques concrètes
-│   └── dictionary.txt           # Fichier dictionnaire
-└── php/                         # Cible web PHP
-    ├── auth.php                 # Authentification
-    └── bienvenue.php           # Page de succès
-```
+│   ├── DictionaryAttack.java
+│   ├── DictionaryLocalCrackerTask.java
+│   ├── DictionaryOnlineCrackerTask.java
+│   ├── LocalBruteForceFactory.java
+│   ├── LocalDictionaryFactory.java
+│   ├── LocalTarget.java
+│   ├── OnlineBruteForceFactory.java
+│   ├── OnlineDictionaryFactory.java
+│   ├── OnlineTarget.java
+│   └── dictionary.txt
+│── DiagrammeDeClasseUML.png
+├── README.md
+└── commande_a_exécuter.txt
 
 ## Variantes Implémentées
 
