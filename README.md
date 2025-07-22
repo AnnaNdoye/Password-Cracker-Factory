@@ -6,8 +6,6 @@ Ce projet implémente un système modulaire de cassage de mots de passe utilisan
 
 ## Architecture Logicielle
 
-### Diagramme de Classes UML
-
 ```
                     AbstractCrackerFactory
                            │
